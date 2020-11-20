@@ -1,0 +1,19 @@
+src += server.c
+src += sqlite3.c
+
+target = server 
+
+cc  = gcc 
+cflags = -lpthread -ldl -L/home/edu/boa/libxml/lib -lxml2 -I/home/edu/boa/libxml/include/libxml2
+
+obj = $(src:%.c=%.o)
+
+$(target):$(obj)
+	$(cc) $^ -o $@ $(cflags)
+%.o:%.c
+	$(cc) -c $< -o $@ $(cflags)
+	
+.phony:clean
+clean:
+	rm *.o $(obj) $(target) -fr
+

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>智慧农业大棚</title>
+<link href="css/index.css" rel="stylesheet" type="text/css">
+<script type="text/javascript"  src="js/humi.js"></script>
+<script type="text/javascript"  src="js/temp.js"></script>
+<script type="text/javascript"  src="js/history.js"></script>
+<script type="text/javascript"  src="js/set.js"></script>
+<script type="text/javascript"  src="js/led.js"></script>
+</head>
+<body onload="my_temp();my_humi();">
+	<div class="main">
+		<h1>智慧农业大棚</h1>
+		<div class="set">
+			<h2>设置温湿度最大最小值：</h2>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tbody>
+				<tr>
+				  <td width="50%" align="center"  style="font-weight: bold;background-color:#DDDDDD;">最大值</td>
+				  <td width="50%" align="center"  style="font-weight: bold;background-color:#DDDDDD;">最小值</td>
+				</tr>
+				<tr>
+				  <td style="font-weight: bold">温度设置：</td>
+				  <td align="center"><button type="button" id="temp_set" onload="temp_humi_set()" onclick="temp_humi_set()">设置</button></td>
+				</tr>
+				<tr>
+				  <td align="center" height="60px"><input type="text" class="text" value="30" id="tempMax">℃</td>
+				  <td align="center" height="60px"><input type="text" class="text" value="20" id="tempMin">℃</td>
+				</tr>
+				<tr>
+				  <td style="font-weight: bold">湿度设置：</td>
+				  <td align="center"><button type="button" id="humi_set" onload="temp_humi_set()" onclick="temp_humi_set()">设置</button></td>
+				</tr>
+				<tr>
+				  <td align="center" height="60px"><input type="text" class="text" value="60" id="humiMax">%</td>
+				  <td align="center" height="60px"><input type="text" class="text" value="25" id="humiMin">%</td>
+				</tr>
+			  </tbody>
+			</table>
+		</div>
+		<div class="content">
+			<h2>当前大棚温湿度值：</h2>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tbody>
+				<tr>
+				  <td width="50%" align="center"  style="font-weight: bold;background-color:#DDDDDD;">采集结点</td>
+				  <td width="50%" align="center"  style="font-weight: bold;background-color:#DDDDDD;">当前值</td>
+				</tr>
+				<tr>
+				  <td style="font-weight: bold">温度：</td>
+				  <td>&nbsp;</td>
+				</tr>
+				<tr>
+				  <td colspan="2" align="center" height="60px">当前温度值为：<input type="text" id="temp" value="">℃</td>
+			    </tr>
+				<tr>
+				  <td style="font-weight: bold">湿度：</td>
+				  <td>&nbsp;</td>
+				</tr>
+				<tr>
+				  <td colspan="2" align="center" height="60px">当前湿度值为：<input type="text" id="humi"  value="">%</td>
+				</tr>
+			  </tbody>
+			</table>
+		</div>
+		<div class="control">
+			<h2>大棚控制设置：</h2>
+		  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tbody>
+				<tr>
+				  <td width="33%" align="center" style="font-weight: bold;background-color:#DDDDDD;">控制节点</td>
+				  <td width="33%" align="center"  style="font-weight: bold;background-color:#DDDDDD;">状态</td>
+				  <td width="33%" align="center"  style="font-weight: bold;background-color:#DDDDDD;">手动/自动</td>
+				</tr>
+				<tr>
+				  <td>LED_1:</td>
+				  <td colspan="2" align="center">(LED_1打开)</td>
+				</tr>
+				<tr>
+				  <td align="center" height="60px"><button type="button" id="led1_but" onclick="set_led(0);">打开</button></td>
+				  <td colspan="2" align="center" height="60px">
+					  <p>
+						  <label>
+							<input type="checkbox" name="CheckboxGroup1" value="手动" id="CheckboxGroup1_0" checked="checked">
+							手动</label>
+						  <label>
+							<input type="checkbox" name="CheckboxGroup1_" value="自动" id="CheckboxGroup1_1">
+							自动</label>
+						  <br>
+					  </p>
+				  </td>
+				</tr>
+				<tr>
+				  <td>LED_2:</td>
+				  <td colspan="2" align="center">(LED_2关闭)</td>
+				</tr>
+				<tr>
+				  <td align="center" height="60px"><button type="button" id="led2_but" onclick="set_led(1);">关闭</button></td>
+				  <td colspan="2" align="center" height="60px">
+					  <p>
+						  <label>
+							<input type="checkbox" name="CheckboxGroup2" value="手动" id="CheckboxGroup2_0" checked="checked">
+							手动</label>
+						  <label>
+							<input type="checkbox" name="CheckboxGroup2_" value="自动" id="CheckboxGroup2_1">
+							自动</label>
+						  <br>
+					  </p>
+				  </td>
+				</tr>
+			  </tbody>
+			</table>
+		</div>
+	  <div class="record">
+		<form action="cgi-bin/text.cgi?">
+			<div id="content">
+				<h3>历史记录</h3>
+				<p style="text-align: center;"> 
+				<select id="select_query">
+				<option value="记录条数">记录条数</option>
+				</select>
+				<input type="text" id="text_query">
+				<input type="button" value="查询" id="button_query" onclick="on_button_query()">
+				<div id="copy">
+				</div>			  
+				</p>
+			</div>
+		</form>		
+      </div>
+	  <div class="warning">
+		  <div id="warn_Led"></div>
+		  <div class="warn_Text">警报指示灯</div>
+		  <div class="led_warn_text">
+			  <input type="text" readonly="readonly" id="ledWarnText" value="温度或者湿度过高过低，系统发出警报指令！！！" >
+		  </div>
+      </div>
+    </div>
+</body>
+</html>
