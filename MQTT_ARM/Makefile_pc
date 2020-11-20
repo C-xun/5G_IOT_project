@@ -1,0 +1,14 @@
+cc  = gcc 
+cflags = -lmosquitto -lpthread -ldl  -lrt 
+cflags += -I/home/edu/tools/mqtt_pc/mqtt_install/home/edu/mqtt_pc/mqtt_install/include 
+cflags += -L/home/edu/tools/mqtt_pc/mqtt_install/home/edu/mqtt_pc/mqtt_install/lib
+
+
+main:
+	$(cc) subscriber.c -o subscriber $(cflags)
+
+	
+.phony:clean
+clean:
+	rm *.o subscriber -fr
+
